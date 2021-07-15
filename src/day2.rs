@@ -30,9 +30,14 @@ impl PasswordRule {
         }
     }
 
-    fn validate(&self) -> bool {
+    fn validate_task_1(&self) -> bool {
         let occurences = self.password.chars().filter(|c| c == &self.rule_letter).count() as u64;
         occurences >= self.rule_min && occurences <= self.rule_max 
+    }
+
+    fn validate_task_2(&self) -> bool {
+        let chars : Vec<char> = self.password.chars().collect();
+        (chars[self.rule_min as usize -1] == self.rule_letter) ^ (chars[self.rule_max as usize -1] == self.rule_letter)
     }
 }
 
@@ -42,10 +47,22 @@ pub fn day2(){
         input
             .split('\n')
             .filter_map(|s| PasswordRule::try_parse_str(s))
-            .filter(|rule| rule.validate())
             .collect();
 
-    println!("Count of rule-abiding passwords: {}", values.len());
+    let solution1 : Vec<PasswordRule> =
+        values.clone()
+            .into_iter()
+            .filter(|rule| rule.validate_task_1())
+            .collect();
+
+    println!("Count of rule-abiding passwords for task1: {}", solution1.len());
+
+    let solution2 : Vec<PasswordRule> =
+        values.into_iter()
+            .filter(|rule| rule.validate_task_2())
+            .collect();
+ 
+    println!("Count of rule-abiding passwords for task2: {}", solution2.len());
 }
 
 
