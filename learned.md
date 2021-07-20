@@ -1,0 +1,1 @@
+- Make sure to never compute linebreaks by splitting on '\n' characters. My input files were encoded CRLF so every line had a trailing CR. Always use String::split !

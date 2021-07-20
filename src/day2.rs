@@ -45,30 +45,31 @@ pub fn day2(){
     let input = fs::read_to_string("inputs/d2").unwrap();
     let values : Vec<PasswordRule> =
         input
-            .split('\n')
+            .lines()
             .filter_map(|s| PasswordRule::try_parse_str(s))
             .collect();
 
-    let solution1 : Vec<PasswordRule> =
+    let solution1  =
         values.clone()
             .into_iter()
-            .filter(|rule| rule.validate_task_1())
-            .collect();
+            .filter(|rule| rule.validate_task_1());
+            // do not collect to prevent allocation
 
-    println!("Count of rule-abiding passwords for task1: {}", solution1.len());
 
-    let solution2 : Vec<PasswordRule> =
+    println!("Count of rule-abiding passwords for task1: {}", solution1.count());
+
+    let solution2 =
         values.into_iter()
-            .filter(|rule| rule.validate_task_2())
-            .collect();
+            .filter(|rule| rule.validate_task_2());
+            // do not collect to prevent allocation
  
-    println!("Count of rule-abiding passwords for task2: {}", solution2.len());
+    println!("Count of rule-abiding passwords for task2: {}", solution2.count());
 }
 
 
 
-// I'd been looking for a test to use the parser combinator library nom for a while. 
-// In the end, I found it extremely unergonomic compared to Haskell's parsec (and its derivatives).
+// I'd been looking for a reason to try out the parser combinator library nom for a while. 
+// In the end, I found it rather unergonomic and verbose compared to Haskell's parsec (and its derivatives).
 // So I just used regex to get on with the next challenges.
 
 // use nom::{IResult, bytes::complete::{tag, take_while}, character::{complete::{anychar}}, combinator::map_res};
