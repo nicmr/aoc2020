@@ -9,6 +9,7 @@ mod day4;
 mod day5;
 mod day6;
 mod day7;
+mod day8;
 
 fn main() {
     let mut daymap: HashMap<String, Box<dyn Fn()>> = HashMap::new();
@@ -22,6 +23,7 @@ fn main() {
     daymap.insert("5".to_string(), Box::new(day5::day5));
     daymap.insert("6".to_string(), Box::new(day6::day6));
     daymap.insert("7".to_string(), Box::new(day7::day7));
+    daymap.insert("8".to_string(), Box::new(day8::day8));
 
     let args : Vec<String> = env::args().collect();
     if args.len() >= 2 {
